@@ -147,9 +147,9 @@ def classify():
         final_test_file = FILTER_FILE.replace("X", str((i + 2) % FILE_COUNT))
         
         """ choose here your c, gamma range """
-        for c in frange(5, 6, 5):
+        for c in frange(-15, 3, 2):
             c = 32;
-            for gamma in frange(-11, -10, 5):
+            for gamma in frange(-15, 3, 2):
                 gamma = 2**(-11);
                 current_combination = (c, gamma)
                 """ first round: create lists first """
