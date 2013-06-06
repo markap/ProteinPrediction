@@ -18,12 +18,10 @@ FILE_COUNT = 3
 FILTER_FILE = "filtered_X.arff"
 
 
-parser = argparse.ArgumentParser(description='ProteinPrediction by Group 23')
-parser.add_argument('-r', metavar='runtype', dest='runtype', required=True, help='defines the runtype (t: training, e: evaluate)')
-parser.add_argument('-c', metavar='cValue', dest='cValue', help='value for c')
-parser.add_argument('-g', metavar='gammaValue', dest='gammaValue', help='value for gamma')
-parser.add_argument('-o', metavar='outputFile', dest='output', help='output filename to store the model in')
-parser.add_argument('-i', metavar='inputFile', dest='input', help='input filename to load a model from')
+parser = argparse.ArgumentParser(description='ProteinPrediction by Group 23 \n\
+\n\
+This file has to be edited internally.')
+parser.add_argument('-p', metavar='wekapath', dest='WEKA_PATH', required=True, help='points to the weka executable e.g. /mnt/opt/data/pp1_13_exercise/weka-3-6-9/weka.jar')
 args = parser.parse_args()
 
 
@@ -218,20 +216,8 @@ def calculate_mean(results, best_combinations):
     return final_values
     
 
-"""
+
 filter_files()
 results, best_combinations = classify()
 final_values = calculate_mean(results, best_combinations)
 print sorted(final_values.iteritems(), key=operator.itemgetter(1), reverse=True)
-"""
-print "start"
-print store_model_command("filtered_0.arff", "smo.model", 1, 1)
-#print subprocess.check_output(store_model_command("filtered_0.arff", "smo.model", 1, 1))
-
-#print load_model_command("smo.model", "tmps_independent_filtered.arff")
-#filter_files()
-#subprocess.call(filter_command("tmps_independent.arff", "tmps_independent_filtered.arff", REMOVE_INDEX), shell=True)
-#print classify_command("filtered_0.arff", "tmps_independent_filtered.arff", 1, 1)
-
-
-"""
