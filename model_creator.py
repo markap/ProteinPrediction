@@ -13,6 +13,21 @@ parser.add_argument('-g', metavar='Value gamma', dest='gammaValue', required=Tru
 parser.add_argument('-a', metavar='arff file', dest='arff', required=True, help='the arf file c and gamma is calculated for')
 args = parser.parse_args()
 
+try:
+   with open(args.WEKA_PATH): pass
+except IOError:
+   print 'Path to weka is invalid!'
+   sys.exit(1)
+try:
+   with open(args.arff): pass
+except IOError:
+   print 'Arff file not found!'
+   sys.exit(1)
+try:
+   with open(my.model): pass
+except IOError:
+   print 'Model file already exists!'
+   sys.exit(1)
 
 
 c = 1

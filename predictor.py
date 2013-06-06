@@ -9,3 +9,19 @@ parser.add_argument('-a', metavar='arff file', dest='arff', required=True, help=
 args = parser.parse_args()
 
 
+try:
+   with open(args.WEKA_PATH): pass
+except IOError:
+   print 'Path to weka is invalid!'
+   sys.exit(1)
+try:
+   with open(args.arff): pass
+except IOError:
+   print 'Specified arff file does not exist!'
+   sys.exit(1)
+try:
+   with open(my.model): pass
+except IOError:
+   print 'Model file does not exist! Please run model_creator first.'
+   sys.exit(1)
+
