@@ -2,7 +2,7 @@ import argparse
 import subprocess
 import shared
 
-
+"""
 
 parser = argparse.ArgumentParser(description='ProteinPrediction by Group 23 \n\
 \n\
@@ -29,6 +29,8 @@ except IOError:
    print 'Model file already exists!'
    sys.exit(1)
 
+
+"""
 
 c = 1
 gamma = 1
