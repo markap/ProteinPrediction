@@ -2,7 +2,7 @@ import argparse
 import subprocess
 import shared
 
-
+"""
 
 parser = argparse.ArgumentParser(description='ProteinPrediction by Group 23 \n\
 \n\
@@ -12,7 +12,7 @@ parser.add_argument('-c', metavar='Value c', dest='cValue', required=True, help=
 parser.add_argument('-g', metavar='Value gamma', dest='gammaValue', required=True, help='gamma value')
 parser.add_argument('-a', metavar='arff file', dest='arff', required=True, help='the arf file c and gamma is calculated for')
 args = parser.parse_args()
-
+"""
 
 
 c = 1
