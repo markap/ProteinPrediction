@@ -27,7 +27,7 @@ def timer():
 
 def frange(x, y, jump):
     while x < y:
-        yield x
+        yield 2**x
         x += jump
 
 def filter_command(in_, out, remove_index):
@@ -55,6 +55,34 @@ def parse_classify_output(in_):
         if v.find("Error on test data") != -1:
             return int(in_[k+2].split()[3]), int(in_[k+3].split()[3])
         
+"""
+    parses the weka output which is plain text
+    (perhaps there is a better format available???)
+    output:
+        tp = True Positive
+        fp = False Positive
+        fn = False Negative
+        tn = True Negative
+"""
+def parse_classify_ConfMatr(in_):
+    for k,v in enumerate(in_):
+        if v.find("Error on test data") != -1:
+            return int(in_[k+15].split()[0]), int(in_[k+15].split()[1]), int(in_[k+16].split()[0]),int(in_[k+16].split()[1])
+
+
+            """
+    calculates how much instances are rightly classified
+"""
+def evaluate_classify_ConfMatr(in_):
+    tp, fp, fn, tn = parse_classify_ConfMatr(in_)
+    acc_pos = tp / (tp+fp)
+    cov_pos = tp / (tp+fn)
+    acc_neg = tn / (tn+fn)
+    cov_neg = tn / (tn+fp)
+    return acc_pos, cov_pos, acc_neg, cov_neg
+
+			
+			
 """
     calculates how much instances are rightly classified
 """
@@ -96,10 +124,10 @@ def classify():
         final_test_file = FILTER_FILE.replace("X", str((i + 2) % FILE_COUNT))
         
         """ choose here your c, gamma range """
-        c = -1
-        while c <= 0:
-        for c in frange(-1, 0, 0.2):
-            for gamma in frange(-1, 2, 0.4):
+        for c in frange(5, 6, 5):
+            c = 32;
+            for gamma in frange(-11, -10, 5):
+                gamma = 2**(-11);
                 current_combination = (c, gamma)
                 """ first round: create lists first """
                 if i == 0:
@@ -111,6 +139,9 @@ def classify():
                 et = t.next()
                 print et
                 test_percentage_right = evaluate_classify_output(test_result)
+                #prints acc_pos,cov_pos,acc_neg,cov_neg
+                print evaluate_classify_ConfMatr(test_result)
+                #prints Q2
                 print test_percentage_right
                 
                 results[current_combination].append({'test': test_percentage_right,
@@ -127,6 +158,9 @@ def classify():
         final_result = subprocess.check_output(classify_command(train_file, final_test_file, best_c, best_gamma), shell=True).split('\n')
         et = t.next()
         final_percentage_right = evaluate_classify_output(final_result) 
+        #prints acc_pos,cov_pos,acc_neg,cov_neg
+        print evaluate_classify_ConfMatr(final_result)
+        #prints Q2
         print final_percentage_right
         print et
         results[best_combination][-1]['final'] = final_percentage_right   
