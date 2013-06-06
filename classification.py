@@ -2,6 +2,7 @@ from __future__ import division
 import subprocess
 import operator
 import time
+import argparse
 
 
 
@@ -15,6 +16,16 @@ REMOVE_INDEX = "1-81,502-1576,1578-2702,2724-2885" #pssm + chempop_hyd + helix
 INPUT_FILE = "tmps_X.arff"
 FILE_COUNT = 3
 FILTER_FILE = "filtered_X.arff"
+
+
+parser = argparse.ArgumentParser(description='ProteinPrediction by Group 23')
+parser.add_argument('-r', metavar='runtype', dest='runtype', required=True, help='defines the runtype (t: training, e: evaluate)')
+parser.add_argument('-c', metavar='cValue', dest='cValue', help='value for c')
+parser.add_argument('-g', metavar='gammaValue', dest='gammaValue', help='value for gamma')
+parser.add_argument('-o', metavar='outputFile', dest='output', help='output filename to store the model in')
+parser.add_argument('-i', metavar='inputFile', dest='input', help='input filename to load a model from')
+args = parser.parse_args()
+
 
 
 def timer():
@@ -41,7 +52,7 @@ def classify_command(train_in, test_in, c, gamma):
     return 'java -cp "' + WEKA_PATH + \
                 '" weka.classifiers.functions.SMO -o -t ' + \
                 train_in + ' -T ' + test_in + ' -C ' + str(c) + ' -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K ' + \
-                '"weka.classifiers.functions.supportVector.PolyKernel -C 250007 -E ' + str(gamma) + ' "'
+                '"weka.classifiers.functions.supportVector.PolyKernel -C 250007 -E ' + str(gamma) +  ' "'
                 
 def store_model_command(train_in, model_out, c, gamma):
     return 'java -cp "' + WEKA_PATH + \
@@ -220,4 +231,6 @@ print store_model_command("filtered_0.arff", "smo.model", 1, 1)
 #subprocess.call(filter_command("tmps_independent.arff", "tmps_independent_filtered.arff", REMOVE_INDEX), shell=True)
 #print classify_command("filtered_0.arff", "tmps_independent_filtered.arff", 1, 1)
 
+
+"""
 
