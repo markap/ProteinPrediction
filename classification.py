@@ -60,10 +60,11 @@ def store_model_command(train_in, model_out, c, gamma):
                 train_in + ' -d  ' + model_out + ' -C ' + str(c) + ' -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K ' + \
                 '"weka.classifiers.functions.supportVector.PolyKernel -C 250007 -E ' + str(gamma) + ' "'
         
+        
 def load_model_command(model_in, test_in):
     return 'java -cp "' + WEKA_PATH + \
-                '" weka.classifiers.functions.SMO -o -T ' + \
-                test_in + '-l ' + model_in
+                '" weka.classifiers.functions.SMO -o -l ' + \
+                model_in + ' -T ' + test_in 
                 
         
 
@@ -223,7 +224,13 @@ print sorted(final_values.iteritems(), key=operator.itemgetter(1), reverse=True)
 """
 print "start"
 print store_model_command("filtered_0.arff", "smo.model", 1, 1)
-print subprocess.check_output(store_model_command("filtered_0.arff", "smo.model", 1, 1))
+#print subprocess.check_output(store_model_command("filtered_0.arff", "smo.model", 1, 1))
+
+#print load_model_command("smo.model", "tmps_independent_filtered.arff")
+#filter_files()
+#subprocess.call(filter_command("tmps_independent.arff", "tmps_independent_filtered.arff", REMOVE_INDEX), shell=True)
+#print classify_command("filtered_0.arff", "tmps_independent_filtered.arff", 1, 1)
+
 
 """
 
