@@ -5,9 +5,10 @@ import time
 
 
 
-WEKA_PATH = "C:\Program Files (x86)\Weka-3-6\weka.jar"
+WEKA_PATH = "/mnt/opt/data/pp1_13_exercise/weka-3-6-9/weka.jar"
 
-REMOVE_INDEX = "1-2707,2719-2885" # chemprop_hyd
+#REMOVE_INDEX = "1-2707,2719-2885" # chemprop_hyd
+REMOVE_INDEX = "1-81,502-1576,1578-2702,2724-2885" #pssm + chempop_hyd + helix
 # 7 helix 5 A/R/N_pssm 6_chemprop_hyd
 #REMOVE_INDEX = "1-181,185-201,205-221,225-241,245-261,265-281,285-301,305-321,325-341,345-361,365-381,385-1574,1590-2706,2720-2885"
 INPUT_FILE = "tmps_X.arff"
@@ -95,8 +96,10 @@ def classify():
         final_test_file = FILTER_FILE.replace("X", str((i + 2) % FILE_COUNT))
         
         """ choose here your c, gamma range """
-        for c in frange(1, 1.6, 0.5):
-            for gamma in frange(1, 1.6, 0.5):
+        c = -1
+        while c <= 0:
+        for c in frange(-1, 0, 0.2):
+            for gamma in frange(-1, 2, 0.4):
                 current_combination = (c, gamma)
                 """ first round: create lists first """
                 if i == 0:
@@ -155,7 +158,7 @@ def calculate_mean(results, best_combinations):
     return final_values
     
 
-#filter_files()
+filter_files()
 results, best_combinations = classify()
 final_values = calculate_mean(results, best_combinations)
 print sorted(final_values.iteritems(), key=operator.itemgetter(1), reverse=True)
