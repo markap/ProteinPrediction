@@ -5,7 +5,8 @@ import time
 
 
 
-WEKA_PATH = "/mnt/opt/data/pp1_13_exercise/weka-3-6-9/weka.jar"
+#WEKA_PATH = "/mnt/opt/data/pp1_13_exercise/weka-3-6-9/weka.jar"
+WEKA_PATH = "C:\Program Files (x86)\Weka-3-6\weka.jar"
 
 #REMOVE_INDEX = "1-2707,2719-2885" # chemprop_hyd
 REMOVE_INDEX = "1-81,502-1576,1578-2702,2724-2885" #pssm + chempop_hyd + helix
@@ -41,7 +42,19 @@ def classify_command(train_in, test_in, c, gamma):
                 '" weka.classifiers.functions.SMO -o -t ' + \
                 train_in + ' -T ' + test_in + ' -C ' + str(c) + ' -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K ' + \
                 '"weka.classifiers.functions.supportVector.PolyKernel -C 250007 -E ' + str(gamma) + ' "'
-
+                
+def store_model_command(train_in, model_out, c, gamma):
+    return 'java -cp "' + WEKA_PATH + \
+                '" weka.classifiers.functions.SMO -o -no-cv -t ' + \
+                train_in + ' -d  ' + model_out + ' -C ' + str(c) + ' -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K ' + \
+                '"weka.classifiers.functions.supportVector.PolyKernel -C 250007 -E ' + str(gamma) + ' "'
+        
+def load_model_command(model_in, test_in):
+    return 'java -cp "' + WEKA_PATH + \
+                '" weka.classifiers.functions.SMO -o -T ' + \
+                test_in + '-l ' + model_in
+                
+        
 
 """ 
     parses the weka output which is plain text 
@@ -81,8 +94,7 @@ def evaluate_classify_ConfMatr(in_):
     cov_neg = tn / (tn+fp)
     return acc_pos, cov_pos, acc_neg, cov_neg
 
-			
-			
+
 """
     calculates how much instances are rightly classified
 """
@@ -192,9 +204,13 @@ def calculate_mean(results, best_combinations):
     return final_values
     
 
+"""
 filter_files()
 results, best_combinations = classify()
 final_values = calculate_mean(results, best_combinations)
 print sorted(final_values.iteritems(), key=operator.itemgetter(1), reverse=True)
-
+"""
+print "start"
+print store_model_command("filtered_0.arff", "smo.model", 1, 1)
+print subprocess.check_output(store_model_command("filtered_0.arff", "smo.model", 1, 1))
 
