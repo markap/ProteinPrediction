@@ -1,4 +1,20 @@
 import logging
+import argparse
+import sys
+
+
+parser = argparse.ArgumentParser(description='ProteinPrediction by Group 23 \n\
+\n\
+Filesplitter')
+parser.add_argument('-a', metavar='arff file', dest='arff', required=True, help='the arf file to split')
+args = parser.parse_args()
+
+
+try:
+    with open(args.arff): pass
+except IOError:
+    print 'Specified arff file does not exist!'
+    sys.exit(1)
 
 
 

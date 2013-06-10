@@ -13,15 +13,15 @@ args = parser.parse_args()
 input_file = args.arff
 
 try:
-   with open(args.arff): pass
+    with open(args.arff): pass
 except IOError:
-   print 'Specified arff file does not exist!'
-   sys.exit(1)
+    print 'Specified arff file does not exist!'
+    sys.exit(1)
 try:
-   with open(shared.MODEL_NAME): pass
+    with open(shared.MODEL_NAME): pass
 except IOError:
-   print "Create a model first. Use the model_creator.py!"
-   sys.exit(1)
+    print "Create a model first. Use the model_creator.py!"
+    sys.exit(1)
     
 
 filtered_file = "pred_filtered.arff"

@@ -1,3 +1,6 @@
+"""
+   contains commands and constants used throughout the whole application
+"""
 
 
 #WEKA_PATH = "/mnt/opt/data/pp1_13_exercise/weka-3-6-9/weka.jar"
@@ -32,7 +35,7 @@ def classify_command(train_in, test_in, c, gamma):
 def store_model_command(train_in, model_out, c, gamma):
     return 'java -cp "' + WEKA_PATH + \
                 '" weka.classifiers.functions.SMO -o -no-cv -t ' + \
-                train_in + ' -d  ' + model_out + ' -C ' + str(c) + ' -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K ' + \
+                train_in + ' -T ' + train_in + ' -d  ' + model_out + ' -C ' + str(c) + ' -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K ' + \
                 '"weka.classifiers.functions.supportVector.PolyKernel -C 250007 -E ' + str(gamma) + ' "'
 
 

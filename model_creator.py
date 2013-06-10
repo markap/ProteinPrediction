@@ -12,18 +12,18 @@ parser.add_argument('-a', metavar='arff file', dest='arff', required=True, help=
 args = parser.parse_args()
 
 try:
-   with open(args.WEKA_PATH): pass
+    with open(args.WEKA_PATH): pass
 except IOError:
-   print 'Path to weka is invalid!'
-   sys.exit(1)
+    print 'Path to weka is invalid!'
+    sys.exit(1)
 try:
-   with open(args.arff): pass
+    with open(args.arff): pass
 except IOError:
-   print 'Arff file not found!'
-   sys.exit(1)
+    print 'Arff file not found!'
+    sys.exit(1)
 
 
-"""
+
 
 c = args.cValue
 gamma = args.gammaValue
@@ -37,4 +37,4 @@ print "files filterd! build model ..."
 print subprocess.check_output(shared.store_model_command(filtered_file, shared.MODEL_NAME, c, gamma))
 print "done!"
 
-"""
+
