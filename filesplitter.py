@@ -82,5 +82,5 @@ for line in file_handle:
 
 file_handle.close()
 
-print "done"
+print "splitting ..."
 

@@ -3,8 +3,8 @@
 """
 
 
-#WEKA_PATH = "/mnt/opt/data/pp1_13_exercise/weka-3-6-9/weka.jar"
-WEKA_PATH = "C:\Program Files (x86)\Weka-3-6\weka.jar"
+WEKA_PATH = "/mnt/opt/data/pp1_13_exercise/weka-3-6-9/weka.jar"
+#WEKA_PATH = "C:\Program Files (x86)\Weka-3-6\weka.jar"
 
 #REMOVE_INDEX = "1-2707,2719-2885" # chemprop_hyd
 REMOVE_INDEX = "1-81,502-1576,1578-2702,2724-2885" #pssm + chempop_hyd + helix

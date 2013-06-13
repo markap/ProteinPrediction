@@ -178,7 +178,8 @@ def calculate_mean(results, best_combinations):
     
 
 
-#filter_files()
+print "filter files"
+filter_files()
 results, best_combinations = classify()
 final_values = calculate_mean(results, best_combinations)
 print sorted(final_values.iteritems(), key=operator.itemgetter(1), reverse=True)

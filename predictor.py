@@ -27,7 +27,7 @@ except IOError:
 filtered_file = "pred_filtered.arff"
 
 print "filter file ..."
-subprocess.call(shared.filter_by_index(input_file, filtered_file))
+subprocess.call(shared.filter_by_index(input_file, filtered_file), shell=True)
 print "predict ..."
 result = subprocess.check_output(shared.load_model_command(shared.MODEL_NAME, filtered_file), shell=True).split('\n')
 
