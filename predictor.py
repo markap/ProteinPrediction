@@ -30,7 +30,7 @@ file_handle = open(input_file, "r")
 header_mode = True
 protein_key = ''
 
-result = []
+protein_result = []
 
 
 count = 0
@@ -46,7 +46,7 @@ for line in file_handle:
        
         if current_protein_key != protein_key:
             if protein_key != "":
-                result.append({'protein': protein_key, 'residues': count})
+                protein_result.append({'protein': protein_key, 'residues': count})
           
             protein_key = current_protein_key         
             count = 0
@@ -55,17 +55,15 @@ for line in file_handle:
     if line.strip() == '@DATA':
         header_mode = False
     
+
+protein_result.append({'protein': protein_key, 'residues': count + 1})
 file_handle.close()
-print result
-    
+
 
 filtered_file = "pred_filtered.arff"
 
-print "filter file ..."
 subprocess.call(shared.filter_by_index(input_file, filtered_file), shell=True)
-print "predict ..."
 result = subprocess.check_output(shared.load_model_command(shared.MODEL_NAME, filtered_file), shell=True).split('\n')
-
 
 i = 0
 protein_index = 0
@@ -74,13 +72,16 @@ current_protein = None
 for line in result:
     i += 1
     if i >= 6 and line.strip() != "":
-        current_protein = result[protein_index]
+        current_protein = protein_result[protein_index]
+	
+	
         if prediction_index == 0:
-            print current_protein['protein']
+            print '>' + current_protein['protein'] 
         prediction_index += 1
         sys.stdout.write(line.split()[2][2])
         if prediction_index == current_protein['residues']:
+	    print ""
             prediction_index = 0
-            print ""
+            protein_index += 1
         
       
