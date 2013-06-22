@@ -5,34 +5,30 @@ import cgitb; cgitb.enable()
 import subprocess
 import os
 import predictor
+import time
+import datetime
 
 form = cgi.FieldStorage()
 
 try:
   # Get filename here.
   fileitem = form['upload']
-  fileprefix = '/tmp/'
+  timestamp = time.time();
+  st = datetime.datetime.fromtimestamp(timestamp).strftime('%Y%m%d%H%M%S');
+  file_name = '/tmp/ppgroup_' + st + '.arff'
   # Test if the file was uploaded
   if fileitem.filename:
-    fn = os.path.basename(fileitem.filename.replace("\\", "/" ))
-    open(fileprefix + fn, 'wb').write(fileitem.file.read())
+    #fn = os.path.basename(fileitem.filename.replace("\\", "/" ))
+    open(file_name, 'wb').write(fileitem.file.read())
     #p = subprocess.Popen(["python", "our-stand-alone-executable-file", fileprefix + fn], stdout=subprocess.PIPE)
     #p = subprocess.Popen(["python", "predictor.py", "-a", fileprefix + fn], stdout=subprocess.PIPE)
        #output, err = p.communicate()  
-    
-    output = "tada"
-
-    print ("""Content-Type: text/html\n
-     <html><head><title>PP1 - Group-23</title></head></html>
-    	<body>
-    %s
-    </body>
-    </html>"""
-     % (output))
-    #print fileprefix + fn
-    predictor.predict(fileprefix + fn)
-    #print "Content-Type: text/html"
-    #predictor.predict("/mnt/home/student/ppgroup23/public_html/cgi-bin/tmp/tmps_independent.arff")
+    print "Content-type:text/html\r\n\r\n"
+    #print "<html>"
+    #print "<head>"
+    #print "</head>"
+    #print "<body>"
+    predictor.predict(file_name)
 
 
 except:

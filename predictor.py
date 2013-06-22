@@ -13,12 +13,12 @@ def predict(input_file):
         with open(input_file): pass
     except IOError:
         print 'Specified arff file does not exist!'
-        sys.exit(1)
+	return
     try:
         with open(shared.MODEL_NAME): pass
     except IOError:
         print "Create a model first. Use the model_creator.py!"
-        sys.exit(1)
+        return
 
 
     file_handle = open(input_file, "r")
@@ -80,6 +80,7 @@ def predict(input_file):
 	        print ""
                 prediction_index = 0
                 protein_index += 1
+
         
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='ProteinPrediction by Group 23 \n\
