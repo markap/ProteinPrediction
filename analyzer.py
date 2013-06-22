@@ -3,6 +3,7 @@ import subprocess
 import operator
 import time
 import shared
+import sys
 
 
 INPUT_FILE = "tmps_X.arff"
@@ -22,7 +23,7 @@ def timer():
 
 def frange(x, y, jump):
     while x < y:
-        yield 2**x
+        yield x
         x += jump
 
 
@@ -109,15 +110,16 @@ def classify():
         final_test_file = FILTER_FILE.replace("X", str((i + 2) % FILE_COUNT))
         
         """ choose here your c, gamma range """
-        for c in frange(-15, 3, 2):
-            c = 32;
-            for gamma in frange(-15, 3, 2):
-                gamma = 2**(-11);
+        for c in frange(0.1, 1.5, 0.1):
+            #c = 32;
+            for gamma in frange(0.1, 1.5, 0.1):
+                #gamma = 2**(-11);
                 current_combination = (c, gamma)
                 """ first round: create lists first """
                 if i == 0:
                     results[current_combination] = []
                 print current_combination
+		sys.stdout.flush()
                 
                 t.next()
                 test_result = subprocess.check_output(shared.classify_command(train_file, test_file, c, gamma), shell=True).split('\n')
@@ -135,6 +137,8 @@ def classify():
                  
                 if test_percentage_right > max_:
                     best_combination = current_combination
+
+	sys.stdout.flush()
         best_combinations.append(best_combination)
         best_c, best_gamma = best_combination
         print best_combination
