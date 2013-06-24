@@ -119,7 +119,7 @@ def classify():
                 if i == 0:
                     results[current_combination] = []
                 print current_combination
-		sys.stdout.flush()
+                sys.stdout.flush()
                 
                 t.next()
                 test_result = subprocess.check_output(shared.classify_command(train_file, test_file, c, gamma), shell=True).split('\n')
