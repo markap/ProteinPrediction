@@ -59,5 +59,6 @@ def classify():
             print t.next()
             sys.stdout.flush()
            
-           
-print done
+if __name__ == "__main__":           
+    classify()
+    print "done"
